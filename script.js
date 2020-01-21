@@ -1,33 +1,25 @@
-const amountofdivs = prompt('How many divs?');
 const etch = document.querySelector('#etch');
 
+const button = document.querySelector('#reset');
+button.addEventListener('click', createGrid);
 
-// Create Div Loop
-for (x = 0; x < amountofdivs; x++) {
-    
-    const row = document.createElement('div');
-    row.className = "row";
-    
-
-    for (i = 1; i <= amountofdivs; i++ ) {
-        const cell = document.createElement('div');
-        cell.className = "etchy"
-        row.appendChild(cell);
+function createGrid(input) {
+    if (Number.isInteger(input) && input > 0) {
+        for (let x = 0; x < (input * input); x++) {
+            const square = document.createElement('div');
+            square.className = 'square';
+            square.style.flexBasis = `${(1 / input) * 100}%`;
+            square.addEventListener('mouseover', changeColor);
+            etch.appendChild(square);
+        }
+    } else {
+        etch.innerHTML = '';
+        const string = prompt('Enter a number between 16 and 99:');
+        createGrid(Number(string));
     }
-    etch.appendChild(row);
-  
- /*    const etchy = document.createElement('div');
-    etchy.classList.add('etchy');
-    etchy.textContent = 'test'; */
+}
+window.onload = createGrid(16);
 
-   
-} 
-
-
-etchy.addEventListener('mouseenter', function (c) {
-    c.target.style.background = 'blue';
-});
-
-
-
-// BUTTON CLEAR 
+function changeColor(e) {
+    e.target.style.background = '#333333';
+}
